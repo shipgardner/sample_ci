@@ -1,14 +1,11 @@
-# Language setting
-language: clojure
+language: go
 
 # Version number
-lein:
-  - lein2
-  
+go:
+  - 1.1
+ # - 1.2
+  #- 1.3
+
 build:
   ci:
-    - lein version
-    - mkdir -p shippable/testresults
-    - mkdir -p shippable/codecoverage
-    - cd sample  
-    - lein test2junit
+    - go version 
