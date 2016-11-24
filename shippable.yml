@@ -1,18 +1,18 @@
 language: java
 
 jdk:
-  # - openjdk7
-   - oraclejdk7
-  # - openjdk6
-   #- oraclejdk8
+   - openjdk7
+   #- oraclejdk7
+ #  - openjdk6
+  # - oraclejdk8
 
 build:
- # pre_ci:
-   # - docker build -t=gcr.io/gcr_project_id/hitchcock3_sample_java .
+  pre_ci:
+    - docker build -t=quay.io/revathird/hitchcock3_sample_java .
 
   pre_ci_boot:
-    image_name: gcr.io/vidya-project/hitchcock3_sample_java
-    image_tag: latest
+    image_name: quay.io/revathird/hitchcock3_sample_java_123
+    image_tag: test_postci.11
     pull: true
     options: '--privileged=true --net=bridge -e FOO=true -e BOO=false'
 
@@ -21,10 +21,13 @@ build:
     - ls -al
 
   post_ci:
-    - docker build -t=gcr.io/vidya-project/hitchcock3_sample_java:t8 .
-    - docker push gcr.io/vidya-project/hitchcock3_sample_java:t8
+    - docker push quay.io/revathird/hitchcock3_sample_java
 
 integrations:
   hub:
-    - integrationName: rc-gcr
-      type: gcr
+    - integrationName: rc-quay
+      type: quay.io
+    #  branches:
+     #   only:
+      #    - master
+      
