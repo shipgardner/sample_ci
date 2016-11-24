@@ -1,13 +1,14 @@
-#Language 
-language: php
+# Language setting
+language: clojure
 
-#Version number
-php:
- # - 5.4
-  #- 5.5
-  - 5.6
- # - 7.0
+# Version number
+lein:
+  - lein2
   
 build:
   ci:
-    - php --version 
+    - lein version
+    - mkdir -p shippable/testresults
+    - mkdir -p shippable/codecoverage
+    - cd sample  
+    - lein test2junit
