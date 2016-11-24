@@ -1,15 +1,25 @@
-language: java
+language: python
 
 # Version number
-jdk:
-  - openjdk6
- # - openjdk7
-  # - oraclejdk7
-  # - oraclejdk8
-  
-env:
-  - SHIPPABLE_POSTGRES_BINARY="/usr/lib/postgresql/\$SHIPPABLE_POSTGRES_VERSION/bin/postgres"
-  
+python:
+ # - 2.6
+ # - 2.7
+#  - 3.2
+#  - 3.3
+#  - 3.4
+  - 3.5
+ # - pypy  
+  #- ppy3
+
 build:
   ci:
-    - java -version
+    - python --version  
+   # - sleep 5m
+   
+#integrations:
+ #notifications:
+ # - integrationName: issues-samplePyt
+  #  type: webhook
+  #  payload:
+  #   - title=Failure - $REPO_FULL_NAME - $BUILD_NUMBER
+  #   - body=Shippable Run $BUILD_NUMBER ($BUILD_URL) failed for $COMPARE_URL 
