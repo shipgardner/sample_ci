@@ -1,34 +1,89 @@
-language: java
+language: node_js
 
-jdk:
-   - openjdk7
-   #- oraclejdk7
- #  - openjdk6
-  # - oraclejdk8
+# Version number
+node_js:
+  - 0.10
+  - 0.12
+  #- 4.2.3
+  #- iojs-v1
+ # - iojs-v2   
+  #- iojs-v3
+#  - 5.0
 
-build:
-#  pre_ci:
-   # - docker build -t=quay.io/revathird/hitchcock3_sample_java .
-
-  pre_ci_boot:
-    image_name: quay.io/revathird/hitchcock3_sample_java_123
-    image_tag: test_postci.11
-    pull: true
-    options: '--privileged=true --net=bridge -e FOO=true -e BOO=false'
-
+build:  
   ci:
-    - ps -eax
-    - ls -al
-
-  post_ci:
-    - docker build -t=quay.io/revathird/hitchcock3_sample_java .
-    - docker push quay.io/revathird/hitchcock3_sample_java
-
+    - node --version 
+    #- ps cs
+    #- sleep 5m
+    
+  pre_ci_boot:
+    image_name: drydock/u12nod 
+    image_tag: prod
+    pull: true 
+   
 integrations:
-  hub:
-    - integrationName: rc-quay
-      type: quay.io
-    #  branches:
-     #   only:
-      #    - master
+  notifications:
+  
+    - integrationName: proj-sampleNod
+      type: webhook
+      payload:
+        - API_URL=$SHIPPABLE_API_URL
+        - CONTAINER_NAME=$SHIPPABLE_CONTAINER_NAME
+        - FOO=bar
+        - BOO=buzz
+      on_start: always
+      on_success: always
+      on_failure: always
+      on_pull_request: always
+      
+    - integrationName: email
+      type: email
+      recipients: 
+        - ship.gardner@gmail.com
+        - shiphitchcock1@gmail.com
+       # - varsha@shippable.com
+      on_start: always
+      on_success: always
+      on_failure: always
+      on_pull_request: always
+      
+    - integrationName: ship-slack
+      type: slack
+      recipients:
+        - "#public-chnl"
+        - pvt-channel
+      on_start: always
+      on_success: always
+      on_failure: always
+      on_pull_request: always
+      
+    - integrationName: irc
+      type: irc
+      recipients:
+        - "chat.freenode.net#test-cock1"
+      on_start: always
+      on_success: always
+      on_failure: always
+      on_pull_request: always
+      
+    - integrationName: ship-hipchat
+      type: hipchat
+      recipients:
+        - '#hitchcock1'
+        - '#hitchcock1pvt'
+        - '@shiphitchcock1'
+      on_start: always
+      on_success: always
+      on_failure: always 
+      on_pull_request: always 
+      
+    - integrationName: ship-samplenodnotificationsissue
+      type: webhook
+      payload:
+        - title=Failure - $REPO_FULL_NAME - $BUILD_NUMBER
+        - body=Shippable Run $BUILD_NUMBER ($BUILD_URL) failed for $COMPARE_URL
+      on_start: always
+      on_success: always
+      on_failure: always
+      on_pull_request: always
       
