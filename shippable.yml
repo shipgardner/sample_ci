@@ -1,0 +1,61 @@
+language: node_js
+
+services:
+  - mysql
+  #- postgres
+  - redis
+  - memcache
+  - elasticsearch
+  - mongodb
+  - rabbitmq
+  - neo4j
+  - couchdb
+  - rethinkdb
+
+# Version number
+node_js:
+  #- 0.10
+  - 0.12
+  #- 4.2.3
+  #- iojs-v1
+  #- iojs-v2
+  #- iojs-v3
+  #- 5.0
+
+env:
+  global:
+    - FOO=FUBU   
+
+  matrix:
+    - M1=ONE 
+
+build:
+ # pre_ci:
+   # - docker build -t=shiphitchcock1/samplenod .
+
+  #pre_ci_boot:  
+   #   image_name: drydock/u12nod
+    #  image_tag: prod
+      #image_name: drydock/u12nod
+      #image_tag: prod
+    #  pull: true
+    #  options: '--privileged=true --net=bridge -e FOO=true -e BOO=false'
+
+  ci:
+    - node --version  
+    - ps -eax
+    - ls -al 
+    - echo "$FOO"
+    - echo "$BOO"   
+       
+ # post_ci:
+    #- docker build -t=shiphitchcock1/samplenod:$BRANCH.$BUILD_NUMBER .
+   # - docker push shiphitchcock1/samplenod:$BRANCH.$BUILD_NUMBER 
+
+#integrations:
+ # hub:
+   # - integrationName: shiphitchcock1-hub
+   #   type: docker 
+    #  branches:
+    #    only:
+       #   - master 
