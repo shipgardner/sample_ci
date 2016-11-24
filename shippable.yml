@@ -1,82 +1,27 @@
-language: node_js
+language: python
+build_image: drydock/u14pyt:prod
+python:
+  - 3.5
+  - 3.2
+  - 3.3
+  - 3.4
+  - pypy
 
-# Version number
-node_js:
-  - 0.10
-  - 0.12
-  #- 4.2.3
-  #- iojs-v1
- # - iojs-v2   
-  #- iojs-v3
-#  - 5.0
+install:
+  - pip install -r requirements.txt
 
-build:  
-  ci:
-    - node --version 
-    - ps cs
-    #- sleep 5m
-    
-  pre_ci_boot:
-    image_name: drydock/u12nod 
-    image_tag: prod
-    pull: true 
-   
-integrations:
-  notifications:
-  
-    - integrationName: proj-sampleNod
-      type: webhook
-      payload:
-        - API_URL=$SHIPPABLE_API_URL
-        - CONTAINER_NAME=$SHIPPABLE_CONTAINER_NAME
-        - FOO=bar
-        - BOO=buzz
-      on_start: never
-      on_success: always
-      on_failure: change
-           
-    - integrationName: email
-      type: email
-      recipients: 
-        - ship.gardner@gmail.com
-        - shiphitchcock1@gmail.com
-       # - varsha@shippable.com
-      on_start: never
-      on_success: always
-      on_failure: change
- 
-    - integrationName: ship-slack
-      type: slack
-      recipients:
-        - "#public-chnl"
-        - pvt-channel
-      on_start: never
-      on_success: always
-      on_failure: change
-      
-    - integrationName: irc
-      type: irc
-      recipients:
-        - "chat.freenode.net#test-cock1"
-      on_start: never
-      on_success: always
-      on_failure: change
-        
-    - integrationName: ship-hipchat
-      type: hipchat
-      recipients:
-        - '#hitchcock1'
-        - '#hitchcock1pvt'
-        - '@shiphitchcock1'
-      on_start: never
-      on_success: always
-      on_failure: change
-         
-    - integrationName: ship-samplenodnotificationsissue
-      type: webhook
-      payload:
-        - title=Failure - $REPO_FULL_NAME - $BUILD_NUMBER
-        - body=Shippable Run $BUILD_NUMBER ($BUILD_URL) failed for $COMPARE_URL   
-      on_start: never
-      on_success: always
-      on_failure: change
+# Make folders for the reports
+before_script:
+  - mkdir -p shippable/testresults
+  - mkdir -p shippable/codecoverage
+
+script:
+  - which python
+  - coverage run `which nosetests` test.py --with-xunit --xunit-file=shippable/testresults/nosetests.xml
+  - coverage xml -o shippable/codecoverage/coverage.xml
+  # exclude
+#branches:
+ #  - TEST
+
+#archive: true
+#cache: true
