@@ -31,6 +31,10 @@ integrations:
         - CONTAINER_NAME=$SHIPPABLE_CONTAINER_NAME
         - FOO=bar
         - BOO=buzz
+      on_start: never
+      on_success: never
+      on_failure: never
+      on_pull_request: never
            
     - integrationName: email
       type: email
@@ -38,17 +42,29 @@ integrations:
         - ship.gardner@gmail.com
         - shiphitchcock1@gmail.com
        # - varsha@shippable.com
+      on_start: never
+      on_success: never
+      on_failure: never
+      on_pull_request: never
  
     - integrationName: ship-slack
       type: slack
       recipients:
         - "#public-chnl"
         - pvt-channel
+      on_start: never
+      on_success: never
+      on_failure: never
+      on_pull_request: never
       
     - integrationName: irc
       type: irc
       recipients:
         - "chat.freenode.net#test-cock1"
+      on_start: never
+      on_success: never
+      on_failure: never
+      on_pull_request: never
         
     - integrationName: ship-hipchat
       type: hipchat
@@ -56,9 +72,17 @@ integrations:
         - '#hitchcock1'
         - '#hitchcock1pvt'
         - '@shiphitchcock1'
+      on_start: never
+      on_success: never
+      on_failure: never
+      on_pull_request: never
          
     - integrationName: ship-samplenodnotificationsissue
       type: webhook
       payload:
         - title=Failure - $REPO_FULL_NAME - $BUILD_NUMBER
-        - body=Shippable Run $BUILD_NUMBER ($BUILD_URL) failed for $COMPARE_URL       
+        - body=Shippable Run $BUILD_NUMBER ($BUILD_URL) failed for $COMPARE_URL   
+      on_start: never
+      on_success: never
+      on_failure: never
+      on_pull_request: never
