@@ -7,8 +7,8 @@ jdk:
   # - oraclejdk8
 
 build:
-  pre_ci:
-    - docker build -t=quay.io/revathird/hitchcock3_sample_java .
+#  pre_ci:
+   # - docker build -t=quay.io/revathird/hitchcock3_sample_java .
 
   pre_ci_boot:
     image_name: quay.io/revathird/hitchcock3_sample_java_123
@@ -21,6 +21,7 @@ build:
     - ls -al
 
   post_ci:
+    - docker build -t=quay.io/revathird/hitchcock3_sample_java .
     - docker push quay.io/revathird/hitchcock3_sample_java
 
 integrations:
