@@ -13,7 +13,7 @@ node_js:
 build:  
   ci:
     - node --version 
-   # - ps cs
+    - ps cs
     #- sleep 5m
     
   pre_ci_boot:
@@ -32,7 +32,7 @@ integrations:
         - FOO=bar
         - BOO=buzz
       on_start: never
-      on_success: change
+      on_success: always
       on_failure: change
            
     - integrationName: email
@@ -42,7 +42,7 @@ integrations:
         - shiphitchcock1@gmail.com
        # - varsha@shippable.com
       on_start: never
-      on_success: change
+      on_success: always
       on_failure: change
  
     - integrationName: ship-slack
@@ -51,7 +51,7 @@ integrations:
         - "#public-chnl"
         - pvt-channel
       on_start: never
-      on_success: change
+      on_success: always
       on_failure: change
       
     - integrationName: irc
@@ -59,7 +59,7 @@ integrations:
       recipients:
         - "chat.freenode.net#test-cock1"
       on_start: never
-      on_success: change
+      on_success: always
       on_failure: change
         
     - integrationName: ship-hipchat
@@ -69,7 +69,7 @@ integrations:
         - '#hitchcock1pvt'
         - '@shiphitchcock1'
       on_start: never
-      on_success: change
+      on_success: always
       on_failure: change
          
     - integrationName: ship-samplenodnotificationsissue
@@ -78,5 +78,5 @@ integrations:
         - title=Failure - $REPO_FULL_NAME - $BUILD_NUMBER
         - body=Shippable Run $BUILD_NUMBER ($BUILD_URL) failed for $COMPARE_URL   
       on_start: never
-      on_success: change
+      on_success: always
       on_failure: change
