@@ -1,14 +1,18 @@
-# Language setting
-language: clojure
+language: c
 
-# Version number
-lein:
-  - lein2
-  
 build:
+  pre_ci:
+    - echo 'true'
+
+  pre_ci_boot:
+    image_name: drydock/u12cpp
+    image_tag: prod
+    pull: false
+    options: '--privileged=true --net=bridge -e FOO=true -e BOO=false'
+
   ci:
-    - lein version
-    - mkdir -p shippable/testresults
-    - mkdir -p shippable/codecoverage
-    - cd sample  
-    - lein test2junit
+    - ./configure && make && make install
+    - ./hello
+
+  post_ci:
+    - echo "true"
