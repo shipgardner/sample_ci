@@ -1,42 +1,34 @@
-language: node_js
+language: java
 
-# Version number
-node_js:
-  #- 0.10
-  #- 0.12
-  #- 4.2.3
-  - iojs-v1
-  #- iojs-v2
-  #- iojs-v3
-  #- 5.0
-
-env:
-  global:
-    - FOO=FUBU   
-
-  matrix:
-    - M1=ONE
+jdk:
+   - openjdk7
+   #- oraclejdk7
+   #- openjdk6
+   #- oraclejdk8
 
 build:
-  #pre_ci:
-  #  - docker build -t=shiphitchcock1/testgardnernode:latest #$BRANCH.$BUILD_NUMBER .
+  pre_ci:
+    - docker build -t=291318889788.dkr.ecr.us-west-2.amazonaws.com/revathi/test .
 
   pre_ci_boot:
-      image_name: shiphitchcock1/testgardnernode
-      image_tag: latest #"$BRANCH.$BUILD_NUMBER"
-      pull: true
-      options: '--privileged=true --net=bridge -e FOO=true -e BOO=false'
+    image_name: 291318889788.dkr.ecr.us-west-2.amazonaws.com/revathi/test
+    image_tag: latest
+    pull: false
+    options: '--privileged=true --net=bridge -e FOO=true -e BOO=false'
 
   ci:
-    - node --version  
     - ps -eax
-    - ls -al 
+    - ls -al
 
   post_ci:
-    - docker build -t=shiphitchcock1/testgardnernode:$BRANCH.$BUILD_NUMBER .
-    - docker push shiphitchcock1/testgardnernode:$BRANCH.$BUILD_NUMBER
-
+    #- docker build -t=480971114143.dkr.ecr.us-east-1.amazonaws.com/vidya1-repo1 .
+    - docker push 291318889788.dkr.ecr.us-west-2.amazonaws.com/revathi/test
+    
 integrations:
   hub:
-    - integrationName: shiphitchcock1-hub
-      type: docker 
+    - integrationName: rc-ecr
+      type: ecr  
+      region: us-west-2
+    #  branches:
+     #   only:
+      #    - master
